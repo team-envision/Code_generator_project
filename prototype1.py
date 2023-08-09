@@ -1,10 +1,5 @@
-import os
-from Code_generator_project.get_answer import get_answer
-from dotenv import load_dotenv   #for python-dotenv method
-load_dotenv()
+from Get_Answer import get_answer
 
-# require('dotenv').config()
-# console.log(process.env) # remove this after you've confirmed it is working
 
 def temp(userlevel):
     if user_level.lower() in ['beginner','']:
@@ -35,6 +30,13 @@ if (temperature > 0):
 
 else:
     query = user_prompt
-# print("question: ", query)
-# query = query ," language : ", language
-# answer = get_answer(query, 0)
+print("Temperature: ", temperature)
+print("question: ", query)
+question = query.choices[0].message.content
+print("\n\n")
+print(question)
+query1 = f"{question}. provide only code, no explanation. language : {language}"
+print(query1)
+answer = get_answer(query1, 0)
+print(answer.choices[0].message.content)
+

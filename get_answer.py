@@ -1,13 +1,38 @@
 import openai
-from dotenv import load_dotenv   #for python-dotenv method
-load_dotenv()
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
+
+API_KEY = config['OPENAI_API_KEY']
+
+# def get_answer(text, temp):
+#     openai.api_key = API_KEY
+#     response = openai.ChatCompletion.create(
+#         engine = "gpt-3.5-turbo",
+#         prompt = text,
+#         temperature = temp,
+#         max_tokens = 150
+#     )
+#     return print(response.choices[0].text)
+import os
+
+
 
 def get_answer(text, temp):
-    openai.api_key = "OPENAI_API_KEY"
+
+    openai.api_key = API_KEY
     response = openai.ChatCompletion.create(
-        engine = "gpt-3.5-turbo",
-        prompt = text,
-        temperature = temp,
-        max_tokens = 150
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": text
+            }
+        ],
+        temperature=temp,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
     )
-    return print(response.choices[0].text)
+    return response
