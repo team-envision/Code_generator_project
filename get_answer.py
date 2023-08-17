@@ -35,4 +35,5 @@ def get_answer(text, temp):
         frequency_penalty=0,
         presence_penalty=0
     )
+    # return response
     return response.choices[0].message.content
