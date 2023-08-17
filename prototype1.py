@@ -1,7 +1,7 @@
 from Get_Answer import get_answer
 
 
-def temp(userlevel):
+def temp(user_level):
     if user_level.lower() in ['beginner','']:
         temperature = 0.7
         return temperature 
@@ -15,28 +15,17 @@ def temp(userlevel):
         return temperature 
     
 #input user language
-language = input("\nEnter the language you want to work in: ")
 
-#input user level 
-user_level = input("\nEnter your level (beginner, intermediate, advanced): ")
 
-#input user prompt
-user_prompt = input("\nEnter your prompt: \n")
+def prompt(user_level, user_prompt, lang):
 
-temperature = temp(user_level)
-if (temperature > 0):
-    question = "Refine this query in a more technical way, keep it short: " + user_prompt
-    query = get_answer(question, temperature)
+    temperature = temp(user_level)
+    if (temperature > 0):
+        question = "Refine this query in a more technical way, keep it short: " + user_prompt + f"using {lang}"
+        query = get_answer(question, temperature)
 
-else:
-    query = user_prompt
-print("Temperature: ", temperature)
-print("question: ", query)
-question = query.choices[0].message.content
-print("\n\n")
-print(question)
-query1 = f"{question}. provide only code, no explanation. language : {language}"
-print(query1)
-answer = get_answer(query1, 0)
-print(answer.choices[0].message.content)
+    else:
+        query = user_prompt
+   
+    return query
 
