@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file
 from flask_cors import CORS
-from functions import temp, prompt, mermaid_chart, get_chats, clear_history
+from functions import temp, prompt, mermaid_chart, get_chats, clear_history, get_last_code
 from Get_Answer import get_answer
 from pymongo import MongoClient
 import os
@@ -63,12 +63,7 @@ def add_to_history():
 @app.route("/get-class-diagrams", methods=["GET"])
 def get_class_diagrams():
   try:
-    chatlist = get_chats(chat_history)
-    chat_list = list(chatlist)
-    mermaid_input = ""
-    i = len(chat_list)
-    mermaid_input = mermaid_input + "\n" + i["code"]
-        
+    mermaid_input = get_last_code(chat_history)     
     mermaid_prompt = f"Generate a Mermaid.js mindmap only using the code given: \n {mermaid_input}"
     mermaid_code = get_answer(mermaid_prompt, 0.7)
     html_code = mermaid_chart(mermaid_code)

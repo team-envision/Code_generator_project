@@ -60,3 +60,14 @@ def get_chats(collection_name):
     return (chat_list)
   except Exception as e:
     return (str(e))
+  
+def get_last_code(collection_name):
+  try:
+    chatlist = get_chats(collection_name)
+    chat_list = list(chatlist)
+    last_code = ""
+    i = len(chat_list)
+    last_code = last_code + "\n" + i["code"]
+    return (last_code)
+  except Exception as e:
+    return (str(e))
