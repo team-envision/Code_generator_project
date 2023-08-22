@@ -66,8 +66,8 @@ def get_class_diagrams():
     chatlist = get_chats(chat_history)
     chat_list = list(chatlist)
     mermaid_input = ""
-    for i in chat_list:
-      mermaid_input = mermaid_input + "\n" + i["code"]
+    i = len(chat_list)
+    mermaid_input = mermaid_input + "\n" + i["code"]
         
     mermaid_prompt = f"Generate a Mermaid.js mindmap only using the code given: \n {mermaid_input}"
     mermaid_code = get_answer(mermaid_prompt, 0.7)
@@ -101,4 +101,3 @@ if __name__=="__main__":
     print("Keyboard interrupt: shutting down...")
   finally:
     client.close()
-
