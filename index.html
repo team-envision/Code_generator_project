@@ -1,18 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flask Web App</title>
+    <title>API Frontend</title>
 </head>
 <body>
-    <h1>Input Form</h1>
-    <form method="POST">
-        <label for="input1">Input 1:</label>
-        <input type="text" name="input1"><br>
-        <label for="input2">Input 2:</label>
-        <input type="text" name="input2"><br>
-        <label for="input3">Input 3:</label>
-        <input type="text" name="input3"><br>
-        <input type="submit" value="Submit">
+    <h1>Get Prompt</h1>
+    <form id="prompt-form">
+        <label for="level">Level:</label>
+        <input type="text" id="level" name="level" required><br><br>
+        
+        <label for="prompt">Prompt:</label>
+        <textarea id="prompt" name="prompt" rows="4" cols="50" required></textarea><br><br>
+        
+        <label for="language">Language:</label>
+        <input type="text" id="language" name="language" required><br><br>
+        
+        <button type="submit">Get Answer</button>
     </form>
+
+    <div id="response"></div>
+
+    <script>
+        const form = document.getElementById('prompt-form');
+        const responseDiv = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const level = document.getElementById('level').value;
+            const promptText = document.getElementById('prompt').value;
+            const language = document.getElementById('language').value;
+
+            const requestData = {
+                level: level,
+                prompt: promptText,
+                language: language
+            };
+
+            try {
+                const response = await fetch('/get-prompt', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const responseData = await response.json();
+                responseDiv.textContent = responseData;
+            } catch (error) {
+                responseDiv.textContent = 'An error occurred.';
+            }
+        });
+    </script>
 </body>
 </html>

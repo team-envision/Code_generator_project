@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 from flask_cors import CORS
 from functions import temp, prompt, mermaid_chart, get_chats, clear_history, get_last_code
 from Get_Answer import get_answer
@@ -7,6 +7,8 @@ import os
 import logging
 import subprocess
 from functions import mermaid_chart
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +23,7 @@ logging.basicConfig(level=logging.ERROR)
 
 @app.route("/")
 def index():
-  return "Welcome to the Code-Generator!"
+  return render_template("index.html")
 
 
 @app.route("/get-prompt", methods=["POST"])
@@ -88,6 +90,19 @@ def change_diagram():
     return changed_html_code
   except Exception as e:
     return (str(e))
+  
+@app.route("/debug", methods=["GET"])
+def debug_code():
+  try:
+    code = request.get_json()
+    if code is None:
+      return ("error: empty request")
+    debug_prompt = f"Debug the following code: {code}"
+    debug_code = get_answer(debug_prompt, 0.7)
+    return debug_code
+  except Exception as e:
+    return (str(e))
+  
 
 if __name__=="__main__":
   try:

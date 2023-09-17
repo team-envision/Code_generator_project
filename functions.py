@@ -2,6 +2,7 @@ from Get_Answer import get_answer
 import base64
 from IPython.display import Image, display
 import matplotlib.pyplot as plt
+import speech_recognition as sr
 
 
 def temp(user_level):
@@ -17,10 +18,25 @@ def temp(user_level):
         temperature = 0
         return temperature 
     
-#input user language
+    else:
+        return "error: invalid user level\nPlease enter one of the following: beginner, intermediate, advanced"
+    
+def record_and_convert():
 
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Please speak something...")
+        # recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source)
 
-
+    try:
+        text = recognizer.recognize_google(audio)
+        return text
+    except sr.UnknownValueError:
+        print("Sorry, could not understand audio.")
+    except sr.RequestError as e:
+        print(f"Error: {e}")
+     
 def mermaid_chart(mindmap_code):
     html_code = f"""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -29,7 +45,6 @@ def mermaid_chart(mindmap_code):
     <script>mermaid.initialize({{startOnLoad:true}});</script>
     """
     return html_code
-
 
 def prompt(user_level, user_prompt, lang):
 
@@ -44,8 +59,8 @@ def prompt(user_level, user_prompt, lang):
         # return query
     return query
 
-answer = prompt("beginner", "how to print hello world", "python")
-print(answer)
+# answer = prompt("beginner", "how to print hello world", "python")
+# print(answer)
 
 def clear_history(collection_name):
   try:
