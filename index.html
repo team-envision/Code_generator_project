@@ -1,56 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>API Frontend</title>
-</head>
-<body>
-    <h1>Get Prompt</h1>
-    <form id="prompt-form">
-        <label for="level">Level:</label>
-        <input type="text" id="level" name="level" required><br><br>
-        
-        <label for="prompt">Prompt:</label>
-        <textarea id="prompt" name="prompt" rows="4" cols="50" required></textarea><br><br>
-        
-        <label for="language">Language:</label>
-        <input type="text" id="language" name="language" required><br><br>
-        
-        <button type="submit">Get Answer</button>
-    </form>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      class="bg-gradient-to-r from-[#F6D1FC] to-[#B9D5FF] min-h-screen flex justify-center items-center flex-col gap-4"
+    >
+      <div class="absolute flex justify-end items-start h-full w-full p-4">
+        <select class="z-10 rounded-2xl px-6 py-2 outline-none">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+      <div
+        class="flex items-center justify-center gap-2 text-[#404040] text-6xl font-bold w-1/2"
+      >
+        CODE <span class="text-[#9333EA]">GENERATOR</span>
+      </div>
+      <div
+        class="flex-col justify-center items-center w-1/2 mx-20 my-4 lg:w-4/5 max-sm:w-full border-4"
+      >
+        <nav class="flex justify-between items-center my-2 rounded-lg mx-4">
+          <p></p>
+          <h1 class="font-bold text-2xl">How may I help</h1>
+          <select class="z-10 rounded-2xl px-6 py-2 outline-none">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="csharp">C#</option>
+            <option value="ruby">Ruby</option>
+            <option value="php">PHP</option>
+            <option value="swift">Swift</option>
+            <option value="go">Go</option>
+            <option value="typescript">TypeScript</option>
+          </select>
+        </nav>
+        <div class="flex border-t-4 mt-4">
+          <div
+            class="flex-col text-xl text-gray-500 w-3/12 h-[500px] mx-4 border-r-4 flex flex-col gap-2"
+          >
+            <div
+              class="text-[#9333EA] gap-2 flex justify-start items-center font-bold my-2"
+            >
+              History
+            </div>
+            <div class="flex flex-col text-lg gap-2 overflow-y-auto">
+              History aajayegi
+            </div>
+          </div>
+          <div
+            class="h-[500px] w-9/12 rounded-lg mx-2 p-4 items-end justify-start flex"
+          >
+            <li class="flex justify-between items-center">
+              <span>Text</span>
+              <button class="p-2 text-[#9333EA] h-10 w-10" id="id">
+                <!-- <MdOutlineDelete class="h-full w-full" /> -->
+              </button>
+            </li>
 
-    <div id="response"></div>
-
-    <script>
-        const form = document.getElementById('prompt-form');
-        const responseDiv = document.getElementById('response');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const level = document.getElementById('level').value;
-            const promptText = document.getElementById('prompt').value;
-            const language = document.getElementById('language').value;
-
-            const requestData = {
-                level: level,
-                prompt: promptText,
-                language: language
-            };
-
-            try {
-                const response = await fetch('/get-prompt', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-
-                const responseData = await response.json();
-                responseDiv.textContent = responseData;
-            } catch (error) {
-                responseDiv.textContent = 'An error occurred.';
-            }
-        });
-    </script>
-</body>
+            <form onSubmit="{handleSubmit}" class="w-full">
+              <label
+                class="flex justify-between items-center rounded-lg w-full"
+              >
+                <input
+                  placeholder="Add todo"
+                  type="text"
+                  class="bg-[#ffffff50] backdrop-blur p-2 w-full rounded-l-lg outline-none"
+                />
+                <button
+                  class="rounded-r-lg bg-[#ffffff50] backdrop-blur p-2 text-[#9333EA] h-10 w-10"
+                >
+                  <!-- <AiFillPlusCircle class="h-full w-full" /> -->
+                </button>
+              </label>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
